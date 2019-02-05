@@ -60,11 +60,11 @@ JNIEXPORT jstring JNICALL Java_frc_robot_vision_Pixy2USBJNI_pixy2USBGetBlocks(JN
     // Blocks detected - print them! //
 
     // Uncomment for debug
-    printf ("Detected %d block(s)\n", pixy.ccc.numBlocks);
+   //  printf ("Detected %d block(s)\n", pixy.ccc.numBlocks);
 
     for (Block_Index = 0; Block_Index < pixy.ccc.numBlocks; ++Block_Index)
     {
-      printf ("  Block %d: ", Block_Index + 1);
+      // printf ("  Block %d: ", Block_Index + 1);
       ss << "block " << Block_Index + 1 << " : ";
       ss << pixy.ccc.blocks[Block_Index].str();
       if (Block_Index < pixy.ccc.numBlocks-1) {

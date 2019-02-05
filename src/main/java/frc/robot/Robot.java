@@ -57,12 +57,12 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-    // Block[] blocks = pixy2USBJNI.blocksBuffer.poll();
-    // if (blocks != null) {
-    //   for (Block b : blocks) {
-    //     System.out.println(b.toString());
-    //   }
-    // }
+    Block[] blocks = pixy2USBJNI.blocksBuffer.poll();
+    if (blocks != null) {
+      for (Block b : blocks) {
+        System.out.println(b.toString());
+      }
+    }
   }
 
   /**
