@@ -32,6 +32,7 @@ public class Pixy2USBJNI implements Runnable {
     private final double m_period = .05; //Milliseconds?
     
     private Pixy2USBJNI pixy2USBJNI;
+    private int cycleCounter = 0;
 
    @Override
    public void run() {
@@ -61,7 +62,11 @@ public class Pixy2USBJNI implements Runnable {
 
     private void loopfunc() {
         String visionStuffs = pixy2USBJNI.pixy2USBGetBlocks();
-        if(visionStuffs.equals("")){
+        if(visionStuffs == null || visionStuffs.equals("")){
+            if (++cycleCounter > 100) {
+                cycleCounter = 0;
+                System.out.println("null");
+            }
            return;
         }
         String[] visionParts = visionStuffs.split("\n");
