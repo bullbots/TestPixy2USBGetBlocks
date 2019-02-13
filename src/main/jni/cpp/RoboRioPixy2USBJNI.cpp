@@ -21,10 +21,9 @@
 
 Pixy2 pixy;
 
-JNIEXPORT void JNICALL Java_frc_robot_vision_Pixy2USBJNI_pixy2USBInit(JNIEnv *env, jobject thisObj) {
+JNIEXPORT jint JNICALL Java_frc_robot_vision_Pixy2USBJNI_pixy2USBInit(JNIEnv *env, jobject thisObj) {
    std::cout << "pixy2 usb init" << std::endl;
-   pixy.init();
-   return;
+   return pixy.init();
 }
 
 JNIEXPORT void JNICALL Java_frc_robot_vision_Pixy2USBJNI_pixy2USBGetVersion(JNIEnv *env, jobject thisObj) {

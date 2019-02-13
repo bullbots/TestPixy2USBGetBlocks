@@ -14,7 +14,7 @@ public class Pixy2USBJNI implements Runnable {
     }
   
     // Declare an instance native method sayHello() which receives no parameter and returns void
-    private native void pixy2USBInit();
+    private native int pixy2USBInit();
 
     private native void pixy2USBGetVersion();
 
@@ -34,30 +34,33 @@ public class Pixy2USBJNI implements Runnable {
     private Pixy2USBJNI pixy2USBJNI;
     private int cycleCounter = 0;
 
-   @Override
-   public void run() {
-      System.out.println("Hello from java!") ;
-      pixy2USBJNI = new Pixy2USBJNI();
-      pixy2USBJNI.pixy2USBInit();
-      pixy2USBJNI.pixy2USBGetVersion();
-      pixy2USBJNI.pixy2USBLampOn();
+    @Override
+    public void run() {
+        pixy2USBJNI = new Pixy2USBJNI();
+        int init_result = pixy2USBJNI.pixy2USBInit();
+        if (init_result == 0) {
+            pixy2USBJNI.pixy2USBGetVersion();
+            pixy2USBJNI.pixy2USBLampOn();
 
-      System.out.println("Starting Thread");
-     
-      m_expirationTime = RobotController.getFPGATime() * 1e-6 + m_period;
-      updateAlarm();
+            System.out.println("Starting Thread");
 
-      while(true){
-         long curTime = NotifierJNI.waitForNotifierAlarm(m_notifier);
-         if(curTime == 0){
-            break;
-         }
+            m_expirationTime = RobotController.getFPGATime() * 1e-6 + m_period;
+            updateAlarm();
 
-         m_expirationTime += m_period;
-         updateAlarm();
+            while(true) {
+                long curTime = NotifierJNI.waitForNotifierAlarm(m_notifier);
+                if(curTime == 0){
+                    break;
+                }
 
-         loopfunc();
-      }
+                m_expirationTime += m_period;
+                updateAlarm();
+
+                loopfunc();
+            }
+        } else {
+            System.err.println("[WARNING] is the Pixy2 plugged in???");
+        }
     }
 
     private void loopfunc() {
