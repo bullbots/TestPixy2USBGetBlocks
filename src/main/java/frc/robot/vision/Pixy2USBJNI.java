@@ -62,13 +62,18 @@ public class Pixy2USBJNI implements Runnable {
 
     private void loopfunc() {
         String visionStuffs = pixy2USBJNI.pixy2USBGetBlocks();
-        if(visionStuffs == null || visionStuffs.equals("")){
+
+        if (visionStuffs.equals("")) {
             if (++cycleCounter > 100) {
                 cycleCounter = 0;
-                System.out.println("null");
+                System.out.println("[INFO] No blocks detected");
             }
            return;
         }
+
+        // Reset counter if there are blocks present
+        cycleCounter = 0;
+
         String[] visionParts = visionStuffs.split("\n");
         blocks = new Block[visionParts.length];
         
